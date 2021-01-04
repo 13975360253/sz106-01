@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.UserDao">
+    <resultMap id="userAccountMap" type="User">
+        <id property="uid" column="uid"></id>
+        <result property="username" column="username"></result>
+        <result property="sex" column="sex"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="address" column="address"></result>
+
+        <!--
+            collection使用在一对多, ofType表示集合的泛型的别名
+        -->
+        <collection property="accountList" ofType="Account" autoMapping="true"></collection>
+    </resultMap>
+    <select id="findByUid" parameterType="_int" resultMap="userAccountMap">
+        SELECT * FROM t_user tu,t_account ta WHERE ta.uid=tu.uid AND tu.uid=#{uid}
+    </select>
+</mapper>
